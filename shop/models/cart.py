@@ -2,8 +2,6 @@ from django.db import models
 
 from django.utils.translation import gettext as _
 
-import item
-
 
 class Cart(models.Model):
     class Meta:
@@ -20,7 +18,7 @@ class Cart(models.Model):
         verbose_name=_('Owner`s nickname')
     )
     items = models.ManyToManyField(
-        to=item.Item,
+        to="Item",
         verbose_name=_('Cart items')
     )
 

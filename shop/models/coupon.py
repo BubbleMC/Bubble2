@@ -4,8 +4,6 @@ from django.db import models
 
 from django.utils.translation import gettext as _
 
-import item
-
 
 class Coupon(models.Model):
     class Meta:
@@ -47,7 +45,11 @@ class Coupon(models.Model):
         verbose_name=_('Discount percent')
     )
     items = models.ManyToManyField(
-        to=item.Item,
+        to="Item",
+        verbose_name=_('Coupon items')
+    )
+    count = models.IntegerField(
         null=True,
-        verbose_name=_('Cart items')
+        default=None,
+        verbose_name=_('Count')
     )

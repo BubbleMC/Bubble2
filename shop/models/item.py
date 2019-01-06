@@ -3,12 +3,10 @@ from django.db import models
 from django.template.defaultfilters import slugify
 from django.utils.translation import gettext as _
 
-import caregory
-
 
 class Item(models.Model):
     class Meta:
-        db_table = 'category'
+        db_table = 'item'
         verbose_name = _('Item')
         verbose_name_plural = _('Items')
 
@@ -22,8 +20,8 @@ class Item(models.Model):
         verbose_name=_('Slug')
     )
     category = models.ForeignKey(
-        to=caregory.Category,
-        on_delete=models.DO_NOTHING,
+        to="Category",
+        on_delete=models.CASCADE,
         verbose_name=_('Category')
     )
     icon = models.ImageField(
