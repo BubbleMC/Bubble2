@@ -18,9 +18,9 @@ class Cart(models.Model):
         verbose_name=_('Owner`s nickname')
     )
     items = models.ManyToManyField(
-        to="Item",
+        to='Item',
         verbose_name=_('Cart items')
     )
 
     def __str__(self):
-        return "Cart: {}, items count: {}".format(self.username, self.items.count())
+        return '{}({})'.format(self.username, self.items.count())

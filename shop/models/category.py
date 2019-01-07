@@ -12,7 +12,7 @@ class Category(models.Model):
 
     name = models.CharField(
         max_length=255,
-        verbose_name=_("Name")
+        verbose_name=_('Name')
     )
     slug = models.SlugField(
         unique=True,
@@ -20,13 +20,14 @@ class Category(models.Model):
         verbose_name=_('Slug')
     )
     icon = models.ImageField(
+        blank=True,
         upload_to='categories/',
         verbose_name=_('Preview image')
     )
 
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.slug)
+        self.slug = slugify(self.name)
         super(Category, self).save()
 
     def __str__(self):
-        return "Category: {}".format(self.name)
+        return '{}'.format(self.name)

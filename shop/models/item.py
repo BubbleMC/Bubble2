@@ -12,7 +12,7 @@ class Item(models.Model):
 
     name = models.CharField(
         max_length=255,
-        verbose_name=_("Name")
+        verbose_name=_('Name')
     )
     slug = models.SlugField(
         unique=True,
@@ -20,11 +20,12 @@ class Item(models.Model):
         verbose_name=_('Slug')
     )
     category = models.ForeignKey(
-        to="Category",
+        to='Category',
         on_delete=models.CASCADE,
         verbose_name=_('Category')
     )
     icon = models.ImageField(
+        blank=True,
         upload_to='items/',
         verbose_name=_('Preview image')
     )
@@ -34,14 +35,15 @@ class Item(models.Model):
         verbose_name=_('Price')
     )
     count = models.IntegerField(
+        blank=True,
         null=True,
         default=None,
         verbose_name=_('Count')
     )
 
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.slug)
+        self.slug = slugify(self.name)
         super(Item, self).save()
 
     def __str__(self):
-        return "Item: {}".format(self.name)
+        return '{}'.format(self.name)

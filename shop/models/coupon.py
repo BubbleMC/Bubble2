@@ -27,7 +27,7 @@ class Coupon(models.Model):
         verbose_name=_('Coupon')
     )
     type = models.CharField(
-        max_length=5,
+        max_length=3,
         choices=COUPON_TYPE_CHOICES,
         default=VALUE,
         verbose_name=_('Coupon type')
@@ -35,21 +35,28 @@ class Coupon(models.Model):
     value = models.DecimalField(
         max_digits=6,
         decimal_places=2,
+        blank=True,
         null=True,
         verbose_name=_('Discount value')
     )
     percent = models.DecimalField(
         max_digits=6,
         decimal_places=2,
+        blank=True,
         null=True,
         verbose_name=_('Discount percent')
     )
     items = models.ManyToManyField(
-        to="Item",
+        to='Item',
+        blank=True,
         verbose_name=_('Coupon items')
     )
     count = models.IntegerField(
+        blank=True,
         null=True,
         default=None,
         verbose_name=_('Count')
     )
+
+    def __str__(self):
+        return '{}'.format(self.type)
