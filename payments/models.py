@@ -3,8 +3,29 @@ from django.utils import timezone
 
 from django.utils.translation import gettext as _
 
-
 from shop.models.cart import Cart
+
+
+class Task(models.Model):
+    class Meta:
+        db_table = 'task'
+        verbose_name = 'Task'
+        verbose_name_plural = 'Tasks'
+
+    status = models.BooleanField(
+        default=False,
+        verbose_name=_('Delivery status')
+    )
+    cart = models.ForeignKey(
+        to=Cart,
+        on_delete=models.CASCADE,
+        verbose_name=_('Cart')
+    )
+    payment = models.ForeignKey(
+        to='Payment',
+        on_delete=models.CASCADE,
+        verbose_name=_('Payment')
+    )
 
 
 class TrustedIP(models.Model):
@@ -24,6 +45,7 @@ class TrustedIP(models.Model):
 class Aggregator(models.Model):
     class Meta:
         db_table = 'aggregator'
+        ordering = ['id']
         verbose_name = _('Aggregator')
         verbose_name_plural = _('Aggregators')
 
@@ -53,6 +75,11 @@ class Aggregator(models.Model):
         related_name='trusted_ips',
         verbose_name=_('Trusted IPs list')
     )
+    currency = models.CharField(
+        max_length=3,
+        blank=True,
+        verbose_name=_('Currency')
+    )
     public_key = models.CharField(
         max_length=255,
         verbose_name=_('Public key')
@@ -77,8 +104,8 @@ class Payment(models.Model):
         verbose_name = _('Payment')
         verbose_name_plural = _('Payments')
 
-    number = models.ImageField(
-        null=True,
+    number = models.IntegerField(
+        blank=True,
         verbose_name=_('Number')
     )
     status = models.BooleanField(
@@ -100,5 +127,7 @@ class Payment(models.Model):
         verbose_name=_('Created date')
     )
     completed_date = models.DateTimeField(
+        blank=True,
+        null=True,
         verbose_name=_('Completed date')
     )

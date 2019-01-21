@@ -22,5 +22,9 @@ class Cart(models.Model):
         verbose_name=_('Cart items')
     )
 
+    @property
+    def price(self):
+        return sum([item.price for item in self.items.all()])
+
     def __str__(self):
-        return '{}({})'.format(self.username, self.items.count())
+        return '{}({}) Price: {}'.format(self.username, self.items.count(), self.price)

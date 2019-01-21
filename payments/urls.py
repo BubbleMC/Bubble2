@@ -1,23 +1,16 @@
 from django.urls import path
 
-from payments.views import test
+from payments.views import PaymentView
 
 
 urlpatterns = [
-    path('success/', test),
-    path('fail/', test),
+    path('success/', PaymentView.as_view()),
+    path('fail/', PaymentView.as_view()),
 
-    path('unitpay/handler/<int:number>', test, name='unitpay_handler'),
-    path('unitpay/handler', test, name='unitpay_single_handler'),
-    path('free-kassa/handler/<int:number>', test, name='free_kassa_handler'),
-    path('free-kassa/handler', test, name='free_kassa_single_handler'),
-    path('interkassa/handler/<int:number>', test, name='inter_kassa_handler'),
-    path('interkassa/handler', test, name='inter_kassa_single_handler'),
 
-    path('unitpay/redirect/<int:number>', test, name='unitpay_redirect'),
-    path('unitpay/redirect', test, name='unitpay_single_redirect'),
-    path('free-kassa/redirect/<int:number>', test, name='free_kassa_redirect'),
-    path('free-kassa/redirect', test, name='free_kassa_single_redirect'),
-    path('interkassa/redirect/<int:number>', test, name='inter_kassa_redirect'),
-    path('interkassa/redirect', test, name='inter_kassa_single_redirect'),
+    path('<str:aggregator>/handler/<int:number>/', PaymentView.as_view(), name='payment_handler'),
+    path('<str:aggregator>/handler/', PaymentView.as_view(), name='payment_single_handler'),
+
+    path('<str:aggregator>/redirect/<int:number>/', PaymentView.as_view(redirect=True), name='payment_redirect'),
+    path('<str:aggregator>/redirect/', PaymentView.as_view(redirect=True), name='payment_single_redirect'),
 ]
